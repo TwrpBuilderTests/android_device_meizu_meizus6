@@ -1,0 +1,27 @@
+# Android fstab file.
+#<src>                  <mnt_point>         <type>    <mnt_flags and options>                               <fs_mgr_flags>
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+
+/dev/block/platform/13500000.dwmmc0/by-name/system  /system             ext4      ro                                                    wait
+/dev/block/platform/13500000.dwmmc0/by-name/cache   /cache              ext4      noatime,nosuid,nodev,nomblk_io_submit                 wait
+/dev/block/platform/13500000.dwmmc0/by-name/userdata    /data               ext4      noatime,nosuid,nodev,nomblk_io_submit,noauto_da_alloc    wait,forceencrypt=/dev/block/platform/13500000.dwmmc0/by-name/metadata
+/dev/block/platform/13500000.dwmmc0/by-name/efs	    /efs                ext4      defaults,rw                                           wait
+#add custom
+/dev/block/platform/13500000.dwmmc0/by-name/custom /custom             ext4      ro,noload,errors=panic     wait,formattable
+##
+#add logo for recovery
+/dev/block/platform/13500000.dwmmc0/by-name/logo /logo emmc defaults defaults
+#
+/dev/block/platform/13500000.dwmmc0/by-name/recovery    /recovery	emmc      defaults             default
+/dev/block/platform/13500000.dwmmc0/by-name/misc        /misc           emmc      defaults             default
+/dev/block/platform/13500000.dwmmc0/by-name/boot        /boot           emmc      defaults             default
+/dev/block/platform/13500000.dwmmc0/by-name/ldfw        /ldfw           emmc      defaults             default
+/dev/block/ram0    	/ram0               vfat	defaults                            	       wait
+/dev/block/mmcblk0boot0    	/bootloader         emmc 	defaults                                       defaults
+
+# VOLD
+/devices/platform/13550000.dwmmc2/mmc_host*	auto	auto	default voldmanaged=sdcard1:auto,encryptable=
+/devices/platform/13600000.usb*			auto	vfat	default	voldmanaged=usb1:auto
+/devices/platform/13600000.usb/13600000.dwc3*	auto	vfat	default	voldmanaged=usb2:auto
